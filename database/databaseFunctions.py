@@ -31,11 +31,7 @@ def getGenericUserInfo(userId):
     sql = "SELECT * FROM generic_user WHERE id = %s"
     val = userId
     cursor.execute(sql, val)
-    myresult = cursor.fetchall()
-    
-
-    for x in myresult:
-        print(x)
+    print(cursor.fetchall())
 
 def getIssueByUser():
     sql = "SELECT generic_user.firstname, generic_user.lastname, issue.street\
@@ -43,12 +39,16 @@ def getIssueByUser():
     cursor.execute(sql)
     myresult = cursor.fetchall()
     
-
-    for x in myresult:
-        print(x)
+    return myresult
+      
 
 getGenericUserInfo(userId)
 
 getIssueByUser()
+
+issue = getIssueByUser()
+
+print(issue)
+
 
 
