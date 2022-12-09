@@ -39,16 +39,22 @@ def getIssueByUser():
     cursor.execute(sql)
     myresult = cursor.fetchall()
     
+    for row in myresult:
+        print("First Name: ", row[0])
+        print("Last Name: ", row[1])
+        print("Street: ", row[2])
+    
+
     return myresult
       
 
 getGenericUserInfo(userId)
 
-getIssueByUser()
+#getIssueByUser()
 
 issue = getIssueByUser()
 
 print(issue)
-
+#print(getIssueByUser())
 
 
