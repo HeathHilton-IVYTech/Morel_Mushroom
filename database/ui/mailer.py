@@ -52,9 +52,9 @@ class Mailer:
         self.do_login = do_login
         self.do_debug = do_debug
 
-    def send_mail(self, receiver_address = "receiver@email.com",
-    mail_subject = "Test",
-    mail_message = "Hello World!"):
+    def send_mail(self, receiver_address,
+    mail_subject,
+    mail_message):
         
 
         # MIME setup

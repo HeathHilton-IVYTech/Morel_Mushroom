@@ -1,6 +1,6 @@
 from tkinter import *
 import databaseFunctions
-
+import mailer
 
 fullName = ""
 street = ""
@@ -8,6 +8,7 @@ city = ""
 state = ""
 emailAddress = ""
 issueDescription = ""
+blank = ""
 
 root = Tk()
 root.geometry('500x500')
@@ -71,7 +72,20 @@ def submit():
     issueDescription = submittedIssue.get()
     databaseFunctions.createIssue(fullName, street, city, state, emailAddress, issueDescription)
     print("added to database")
+    confirmationEmail(fullName, street, city, state, emailAddress, issueDescription)
     print(fullName, street, city, state, emailAddress, issueDescription)
+
+def confirmationEmail(fullName, street, city, state, emailAddress, issueDescription):
+    mail_subject = "Road Tech Repair Submission"
+    mail_message = "Thank you, " + fullName + ", the issue at " + street + " in " + city + ", " + state + " has been submitted." 
+    #mail_message = "Test Submission"
+    #my_mailer = mailer.Mailer("py_mailer@email.com","secretpassword","smtp.email.com",587,True,True,False)
+    #my_mailer.send_mail(emailAddress, mail_subject, mail_message)
+
+    my_mailer = mailer.Mailer("py_mailer@clond.net","ZAhJDErU3QK8","smtp.gmail.com")
+    print(my_mailer.send_mail(emailAddress, mail_subject, mail_message))
+
+    #mailer.Mailer.send_mail(blank, emailAddress, mail_subject, mail_message)
 
 
 
