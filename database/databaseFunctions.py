@@ -20,9 +20,9 @@ def createGenericUser(firstname, lastname, email, username):
    
 
 
-def createIssue(street, city, state, zip, user_email):
-    sql = "INSERT INTO issue (street, city, state, zip) VALUES (%s, %s, %s, %s, %s)"
-    val = (street, city, state, zip, user_email)
+def createIssue(fullName, street, city, state, zip, emailAddress, issueDescription):
+    sql = "INSERT INTO issue (street, city, state, zip) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+    val = (fullName, street, city, state, zip, emailAddress, issueDescription)
     cursor.execute(sql, val)
     databaseConnection.db.commit()
   
