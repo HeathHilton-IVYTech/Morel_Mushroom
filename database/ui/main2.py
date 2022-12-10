@@ -72,7 +72,10 @@ def submit():
     issueDescription = submittedIssue.get()
     databaseFunctions.createIssue(fullName, street, city, state, emailAddress, issueDescription)
     print("added to database")
-    confirmationEmail(fullName, street, city, state, emailAddress, issueDescription)
+    if(confirmationEmail(fullName, street, city, state, emailAddress, issueDescription)):
+        print("Message successfully delivered to " + emailAddress + ".")
+    else:
+        print("Sorry, the confirmation email could not be delivered.")
     print(fullName, street, city, state, emailAddress, issueDescription)
 
 def confirmationEmail(fullName, street, city, state, emailAddress, issueDescription):
@@ -83,7 +86,7 @@ def confirmationEmail(fullName, street, city, state, emailAddress, issueDescript
     #my_mailer.send_mail(emailAddress, mail_subject, mail_message)
 
     my_mailer = mailer.Mailer("py_mailer@clond.net","ZAhJDErU3QK8","smtp.gmail.com")
-    print(my_mailer.send_mail(emailAddress, mail_subject, mail_message))
+    return my_mailer.send_mail(emailAddress, mail_subject, mail_message)
 
     #mailer.Mailer.send_mail(blank, emailAddress, mail_subject, mail_message)
 
