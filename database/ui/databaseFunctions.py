@@ -2,7 +2,7 @@ import databaseConnection
 
 
 cursor = databaseConnection.db.cursor()
-userId = (1,)
+
 
 def createAdminUser(firstname, lastname, username, email, city_assigned, state_assigned):
     sql = "INSERT INTO admin_user (firstname, lastname, username, email, city_assigned, state_assigned) VALUES (%s, %s, %s, %s, %s, %s)"
@@ -52,16 +52,22 @@ def getIssueByUser():
     
 
     return myresult
-      
 
-getGenericUserInfo(userId)
-getAdminUserInfo(userId)
+def getAllIssues():
+    sql = "SELECT * FROM issue"
+    cursor.execute(sql)
+    issues = cursor.fetchall()
 
-#getIssueByUser()
+    for row in issues:
+        print("ID: ", row[0])
+        print("Submitters Name: ", row[1])
+        print("Street: ", row[2])
+        print("City: ", row[3])
+        print("State: ", row[4])
+        print("Email Address: ", row[5])
+        print("Description: ", row[6])
+        print("Completed: ", row[7])
+    return issues
 
-issue = getIssueByUser()
-
-print(issue)
-#print(getIssueByUser())
 
 
