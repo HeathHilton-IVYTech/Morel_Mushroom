@@ -80,7 +80,7 @@ def submit():
 
 def confirmationEmail(fullName, street, city, state, emailAddress, issueDescription):
     mail_subject = "Road Tech Repair Submission"
-    mail_message = "Thank you, " + fullName + ", the issue at " + street + " in " + city + ", " + state + " has been submitted." 
+    mail_message = "Thank you, " + fullName + ", the issue at " + street + " in " + city + ", " + state + " has been submitted." + issueDescription
     #mail_message = "Test Submission"
     #my_mailer = mailer.Mailer("py_mailer@email.com","secretpassword","smtp.email.com",587,True,True,False)
     #my_mailer.send_mail(emailAddress, mail_subject, mail_message)
@@ -101,11 +101,11 @@ def openNewWindow():
 
     # define window geometry
 
-    newWindow.geometry("1000x800")
+    newWindow.geometry("250x250")
 
     Label(newWindow,
-          text="Your Issue has been submitted ... \n" + str(submitterName.get()) + "\n" + str(submitterEmail.get()) +"\n" + str(streetAddress.get()) + "\n" + str(submittedIssue.get())).place(x=425, y=250)
-    Button(newWindow, text="Exit", command=newWindow.destroy).place(x=500, y=500)
+          text="Your Issue has been submitted ... \n" + str(submitterName.get()) + "\n" + str(submitterEmail.get()) +"\n" + str(streetAddress.get()) + "\n" + str(submittedIssue.get())).place(x=25, y=25)
+    Button(newWindow, text="Exit", command=newWindow.destroy).place(x=100, y=100)
 
 
 root.mainloop()
