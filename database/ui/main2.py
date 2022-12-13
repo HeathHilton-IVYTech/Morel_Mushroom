@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter as tk
 import databaseFunctions
 import mailer
 
@@ -47,21 +48,10 @@ issueLabel.place(x=28, y=320)
 submittedIssue = Entry(root)
 submittedIssue.place(x=200, y=320, width=200)
 
-#directionLabel = Label(root, text="Direction of Travel:", width=20, font=("bold", 10))
-#directionLabel.place(x=70, y=230)
-
-#var = IntVar()
-
-#Radiobutton(root, text="N", padx=5, variable=var, value=1).place(x=235, y=230)
-#Radiobutton(root, text="S", padx=5, variable=var, value=2).place(x=280, y=230)
-#Radiobutton(root, text="E", padx=5, variable=var, value=3).place(x=325, y=230)
-#Radiobutton(root, text="W", padx=5, variable=var, value=4).place(x=370, y=230)
 
 Button(root, text='Submit', command=lambda: (openNewWindow()), width=20, bg='brown', fg='white').place(x=180, y=375)
-Button(root, text='Admin Portal', width=20, bg='red', fg='white').place(x=180, y=425)
+Button(root, text='Admin Portal', command=lambda: (openAdminWindow()), width=20, bg='red', fg='white').place(x=180, y=425)
 
-
-# it is use for display the registration form on the window
 
 def submit():
     fullName = submitterName.get()
@@ -76,7 +66,8 @@ def submit():
         print("Message successfully delivered to " + emailAddress + ".")
     else:
         print("Sorry, the confirmation email could not be delivered.")
-    print(fullName, street, city, state, emailAddress, issueDescription)
+    #print(fullName, street, city, state, emailAddress, issueDescription)
+
 
 def confirmationEmail(fullName, street, city, state, emailAddress, issueDescription):
     mail_subject = "Road Tech Repair Submission"
@@ -91,9 +82,6 @@ def confirmationEmail(fullName, street, city, state, emailAddress, issueDescript
     #mailer.Mailer.send_mail(blank, emailAddress, mail_subject, mail_message)
 
 
-
-
-
 def openNewWindow():
     submit()
     newWindow = Toplevel(root)
@@ -106,6 +94,36 @@ def openNewWindow():
     Label(newWindow,
           text="Your Issue has been submitted ... \n" + str(submitterName.get()) + "\n" + str(submitterEmail.get()) +"\n" + str(streetAddress.get()) + "\n" + str(submittedIssue.get())).place(x=25, y=25)
     Button(newWindow, text="Exit", command=newWindow.destroy).place(x=100, y=100)
+    
+
+def openAdminWindow():
+
+    window = tk.Tk()
+    window.title("Issues Submitted")
+    
+    text = tk.Text(window, height=50, width=150)
+    scroll = tk.Scrollbar(window)
+    text.configure(yscrollcommand=scroll.set)
+    text.pack(side=tk.LEFT)
+    
+    scroll.config(command=text.yview)
+    scroll.pack(side=tk.RIGHT, fill=tk.Y)
+    submittedIssueList = databaseFunctions.getAllIssues()
+
+
+    chunked_list = list()
+    chunk_size = 1
+    for i in range(0, len(submittedIssueList), chunk_size):
+        chunked_list.append(submittedIssueList[i:i+chunk_size])
+
+
+    i = 0
+    paragraphString = "Submitted Data: \n#  Name:    Address:      City:  ST:    Email:    Issue:   Repaired:  Mystery:"
+    for i in range(0, len(chunked_list)):
+        paragraphString = paragraphString + "\n" + str(chunked_list[i])
+    paragraphString = paragraphString.translate({ord(i):None for i in '[]()\''})
+    
+    text.insert(tk.END, paragraphString)
 
 
 root.mainloop()
