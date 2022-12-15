@@ -112,7 +112,8 @@ def openAdminWindow():
     submittedIssueList = databaseFunctions.getAllIssues()
     d = submittedIssueList
     df=pd.DataFrame(d, columns=['#', 'Name:', 'Street:', 'City:', 'State:', 'Email:', 'Issue:', 'Repaired:', 'Mystery:'])
-    
+    df=df.drop(df.columns[[8]], axis=1)
+
     scrollViewBox.insert(tk.END, df)
         
 root.mainloop()
