@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter as tk
 import databaseFunctions
 import mailer
+import pandas as pd
 
 fullName = ""
 street = ""
@@ -93,7 +94,7 @@ def openNewWindow():
 
     Label(newWindow,
           text="Your Issue has been submitted ... \n" + str(submitterName.get()) + "\n" + str(submitterEmail.get()) +"\n" + str(streetAddress.get()) + "\n" + str(submittedIssue.get())).place(x=25, y=25)
-    Button(newWindow, text="Exit", command=newWindow.destroy).place(x=100, y=100)
+    Button(newWindow, text="Exit", command=newWindow.destroy).place(x=100, y=110)
     
 
 def openAdminWindow():
@@ -101,28 +102,17 @@ def openAdminWindow():
     window = tk.Tk()
     window.title("Issues Submitted")
     
-    text = tk.Text(window, height=50, width=150)
+    scrollViewBox = tk.Text(window, height=50, width=175)
     scroll = tk.Scrollbar(window)
-    text.configure(yscrollcommand=scroll.set)
-    text.pack(side=tk.LEFT)
-    
-    scroll.config(command=text.yview)
+    scrollViewBox.configure(yscrollcommand=scroll.set)
+    scrollViewBox.pack(side=tk.LEFT)
+    scroll.config(command=scrollViewBox.yview)
     scroll.pack(side=tk.RIGHT, fill=tk.Y)
+
     submittedIssueList = databaseFunctions.getAllIssues()
-
-
-    chunked_list = list()
-    chunk_size = 1
-    for i in range(0, len(submittedIssueList), chunk_size):
-        chunked_list.append(submittedIssueList[i:i+chunk_size])
-
-
-    i = 0
-    paragraphString = "Submitted Data: \n#  Name:    Address:      City:  ST:    Email:    Issue:   Repaired:  Mystery:"
-    for i in range(0, len(chunked_list)):
-        paragraphString = paragraphString + "\n" + str(chunked_list[i])
-    paragraphString = paragraphString.translate({ord(i):None for i in '[]()\''})
+    d = submittedIssueList
+    df=pd.DataFrame(d, columns=['#', 'Name:', 'Street:', 'City:', 'State:', 'Email:', 'Issue:', 'Repaired:', 'Mystery:'])
     
-    text.insert(tk.END, paragraphString)
-
+    scrollViewBox.insert(tk.END, df)
+        
 root.mainloop()
