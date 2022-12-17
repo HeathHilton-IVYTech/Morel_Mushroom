@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter as tk
 import databaseFunctions
 import mailer
+import os
 import pandas as pd
 
 fullName = ""
@@ -49,9 +50,12 @@ issueLabel.place(x=28, y=320)
 submittedIssue = Entry(root)
 submittedIssue.place(x=200, y=320, width=200)
 
+def run():
+    os.system('python database/csv.py')
 
 Button(root, text='Submit', command=lambda: (openNewWindow()), width=20, bg='brown', fg='white').place(x=180, y=375)
 Button(root, text='Admin Portal', command=lambda: (openAdminWindow()), width=20, bg='red', fg='white').place(x=180, y=425)
+Button(root, text='Export Database as CSV', width=20, bg='red', fg='white', command = run).place(x=180, y=475)
 
 
 def submit():
