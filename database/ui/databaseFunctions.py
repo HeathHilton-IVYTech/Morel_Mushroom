@@ -25,6 +25,7 @@ def createIssue(fullName, street, city, state, emailAddress, issueDescription):
     val = (fullName, street, city, state, emailAddress, issueDescription)
     cursor.execute(sql, val)
     databaseConnection.db.commit()
+    return("True")
   
 
 def getGenericUserInfo(userId):
