@@ -147,7 +147,9 @@ def openAdminWindow():
 root.mainloop()
 
 
-Cynthia!!!!
-Here is "something else"
 
-Hi everyone! 
+#git pull
+
+#git add .
+#git commit -m "some sort of message"
+#git push
