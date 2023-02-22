@@ -1,31 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 from tkinter import *
 import tkinter as tk
 from tkinter import messagebox
@@ -171,3 +143,11 @@ def openAdminWindow():
     scrollViewBox.insert(tk.END, df)
         
 root.mainloop()
+
+
+
+#git pull
+
+#git add .
+#git commit -m "some sort of message"
+#git push
