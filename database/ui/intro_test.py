@@ -4,70 +4,95 @@ from tkinter import messagebox
 import pandas as pd
 
 #Overall declaration of global variables that the program uses
-fullName = ""
-street = ""
+address = ""
 city = ""
 state = ""
-emailAddress = ""
-issueDescription = ""
-blank = ""
+notes = ""
+date = ""
 testFunction = False
+lines = ""
 
 #Create the initial project submittal screen with titles, labels, entry fields, and buttons
-root = Tk()
-root.geometry('500x500')
-root.title("Road Issue")
+rootLogOn = Tk()
+rootLogOn.geometry('500x300')
+rootLogOn.title("Morel Mushrooms")
 
-titleLabel = Label(root, text="Road Issue Form", width=20, font=("bold", 20))
+titleLabel = Label(rootLogOn, text="Morel Mushrooms Logon", width=20, font=("bold", 20))
 titleLabel.place(x=90, y=53)
 
-submitterLabel = Label(root, text="Full Name:*", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+submitterLabel = Label(rootLogOn, text="User Name:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
 submitterLabel.place(x=28, y=130)
-submitterName = Entry(root)
+submitterName = Entry(rootLogOn)
 submitterName.place(x=200, y=130, width=200)
 
-streetLabel = Label(root, text="Street Address:*", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+streetLabel = Label(rootLogOn, text="Password:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
 streetLabel.place(x=28, y=180)
-streetAddress = Entry(root)
+streetAddress = Entry(rootLogOn)
 streetAddress.place(x=200, y=180, width=200)
 
-stateLabel = Label(root, text="City:*", width=20, anchor="e", justify=LEFT, font=("bold", 10))
-stateLabel.place(x=28, y=230)
-cityAddress = Entry(root)
-cityAddress.place(x=200, y=230, width=150)
+Button(rootLogOn, text='Submit', command=lambda: (openSubmissionWindow()), width=20, bg='brown', fg='white').place(x=180, y=230)
 
-stateLabel = Label(root, text="State:*", width=10, font=("bold", 10))
-stateLabel.place(x=300, y=230)
-stateAddress = Entry(root)
-stateAddress.place(x=370, y=230, width=29)
-
-emailLabel = Label(root, text="Email:*", width=20, anchor="e", justify=LEFT, font=("bold", 10))
-emailLabel.place(x=28, y=280)
-submitterEmail = Entry(root)
-submitterEmail.place(x=200, y=280, width=200)
-
-issueLabel = Label(root, text="Description of Road Issue:*", width=20, anchor="e", justify=LEFT, font=("bold", 10))
-issueLabel.place(x=28, y=320)
-submittedIssue = Entry(root)
-submittedIssue.place(x=200, y=320, width=200)
+##########################################################
 
 
-Button(root, text='Submit', command=lambda: (openNewWindow()), width=20, bg='brown', fg='white').place(x=180, y=375)
-Button(root, text='Admin Portal', command=lambda: (openAdminWindow()), width=20, bg='red', fg='white').place(x=180, y=425)
+
+def openSubmissionWindow():
+
+    #with open('readme.txt') as f:
+    #lines = f.readlines()
+    
+    rootSubmission = Tk()
+    rootSubmission.geometry('500x500')
+    rootSubmission.title("Morel Mushrooms")
+
+    titleLabel = Label(rootSubmission, text="Morel Mushrooms Logon", width=20, font=("bold", 20))
+    titleLabel.place(x=90, y=53)
+
+    addressLabel = Label(rootSubmission, text="Address:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+    addressLabel.place(x=28, y=130)
+    addressField = Entry(rootSubmission)
+    addressField.place(x=200, y=130, width=200)
+
+    cityLabel = Label(rootSubmission, text="City:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+    cityLabel.place(x=28, y=180)
+    cityField = Entry(rootSubmission)
+    cityField.place(x=200, y=180, width=200)
+
+    stateLabel = Label(rootSubmission, text="State:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+    stateLabel.place(x=28, y=230)
+    stateField = Entry(rootSubmission)
+    stateField.place(x=200, y=230, width=200)
+
+    noteLabel = Label(rootSubmission, text="Notes:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+    noteLabel.place(x=28, y=280)
+    noteField = Entry(rootSubmission)
+    noteField.place(x=200, y=280, width=200)
+
+    dateLabel = Label(rootSubmission, text="Date:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+    dateLabel.place(x=28, y=330)
+    dateField = Entry(rootSubmission)
+    dateField.place(x=200, y=330, width=200)
+    
+    Button(rootSubmission, text='Submit', command=lambda: (submit()), width=20, bg='brown', fg='white').place(x=180, y=380)
 
 #The above Submit button directs the program here. 
 def submit():
     #Pulling the data in the entry boxes
-    fullName = submitterName.get()
-    street = streetAddress.get()
-    city = cityAddress.get()
-    state = stateAddress.get()
-    emailAddress = submitterEmail.get()
-    issueDescription = submittedIssue.get()
+    address = addressField.get()
+    city = cityField.get()
+    state = stateField.get()
+    note = noteField.get()
+    date = dateField.get()
+
+    if(address == "" or city == "" or state == "" or note == "" or date == ""):
+        messagebox.showerror('Error', 'All fields are required')
+    else:
+        openSubmittedConfirmWindow()
+
     #Verify that all of the fields have data, program shuts you down unless its filled
-    if(fullName == "" or street == "" or city == "" or state == "" or emailAddress == "" or issueDescription == ""):
+    #if(fullName == "" or street == "" or city == "" or state == "" or emailAddress == "" or issueDescription == ""):
         #messagebox.showerror('Error', 'All fields are required')
-        testFunction = False
+    #    testFunction = False
     #If you are good, YOU SHALL PASS!
     #else:
         #Attempt to send it to the database, shut it all down if it fails
@@ -85,10 +110,10 @@ def submit():
         #    testFunction = False
 
     #If there was a failure anywhere, an error is thrown and then it is returned to the function that originally called this function "openNewWindow()"
-    return(testFunction)
+    #return(testFunction)
 
 #Take in the field data and then 
-def confirmationEmail(fullName, street, city, state, emailAddress, issueDescription):
+def openSubmittedConfirmWindow():
     mail_subject = "Road Tech Repair Submission"
     mail_message = "Thank you, " + fullName + ", the issue at " + street + " in " + city + ", " + state + " has been submitted." + issueDescription
 
@@ -142,7 +167,7 @@ def openAdminWindow():
 
     scrollViewBox.insert(tk.END, df)
         
-root.mainloop()
+rootLogOn.mainloop()
 
 
 
