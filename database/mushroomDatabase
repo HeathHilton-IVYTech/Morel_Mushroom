@@ -1,5 +1,4 @@
 import sqlite3
-from main.py import *
 
 # Connect to the database
 conn = sqlite3.connect('mushroom.db')
@@ -15,7 +14,7 @@ conn.execute('''CREATE TABLE IF NOT EXISTS users
 while True:
     name = input("Enter your name: ")
     email = input("Enter your email: ")
-    location = input("Enter mushrrom location: ")
+    location = input("Enter mushroom location: ")
     
     # Insert the data into the table
     conn.execute(f"INSERT INTO users (name, email, location) VALUES ('{name}', '{email}', '{location}')")
