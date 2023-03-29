@@ -13,71 +13,83 @@ testFunction = False
 lines = ""
 
 #Create the initial project submittal screen with titles, labels, entry fields, and buttons
-rootLogOn = Tk()
-rootLogOn.geometry('500x300')
-rootLogOn.title("Morel Mushrooms")
+root = Tk()
+root.geometry('500x600')
+root.title("Morel Mushrooms")
 
-titleLabel = Label(rootLogOn, text="Morel Mushrooms Logon", width=20, font=("bold", 20))
-titleLabel.place(x=90, y=53)
 
-submitterLabel = Label(rootLogOn, text="User Name:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
-submitterLabel.place(x=28, y=130)
-submitterName = Entry(rootLogOn)
-submitterName.place(x=200, y=130, width=200)
+titleLabel = Label(root, text="Morel Mushrooms Submitter", width=35, font=("bold", 20))
+titleLabel.place(x=-30, y=53)
 
-streetLabel = Label(rootLogOn, text="Password:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
-streetLabel.place(x=28, y=180)
-streetAddress = Entry(rootLogOn)
-streetAddress.place(x=200, y=180, width=200)
+userLabel = Label(root, text="User Name:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+userLabel.place(x=28, y=130)
+userName = Entry(root)
+userName.place(x=200, y=130, width=200)
 
-Button(rootLogOn, text='Submit', command=lambda: (openSubmissionWindow()), width=20, bg='brown', fg='white').place(x=180, y=230)
+passLabel = Label(root, text="Password:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+passLabel.place(x=28, y=180)
+passWord = Entry(root)
+passWord.place(x=200, y=180, width=200)
+
+lineLabel = Label(root, text="------------------------------------------------------------------------", width=30, anchor="e", fg='gray', justify=LEFT, font=("bold", 10))
+lineLabel.place(x=150, y=210)
+
+addressLabel = Label(root, text="Address:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+addressLabel.place(x=28, y=250)
+addressField = Entry(root)
+addressField.place(x=200, y=250, width=200)
+
+cityLabel = Label(root, text="City:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+cityLabel.place(x=28, y=300)
+cityField = Entry(root)
+cityField.place(x=200, y=300, width=200)
+
+stateLabel = Label(root, text="State:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+stateLabel.place(x=28, y=350)
+stateField = Entry(root)
+stateField.place(x=200, y=350, width=200)
+
+noteLabel = Label(root, text="Notes:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+noteLabel.place(x=28, y=400)
+noteField = Entry(root)
+noteField.place(x=200, y=400, width=200)
+
+dateLabel = Label(root, text="Date:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
+dateLabel.place(x=28, y=450)
+dateField = Entry(root)
+dateField.place(x=200, y=450, width=200)
+
+
+Button(root, text='Submit', command=lambda: (submit()), width=20, bg='brown', fg='white').place(x=180, y=525)
 
 ##########################################################
 
 
 
 def openSubmissionWindow():
-
+    root.destroy()
     #with open('readme.txt') as f:
     #lines = f.readlines()
     
-    rootSubmission = Tk()
-    rootSubmission.geometry('500x500')
-    rootSubmission.title("Morel Mushrooms")
+    #rootSubmission = Tk()
+    #rootSubmission.geometry('500x500')
+    #rootSubmission.title("Morel Mushrooms")
 
-    titleLabel = Label(rootSubmission, text="Morel Mushrooms Logon", width=20, font=("bold", 20))
-    titleLabel.place(x=90, y=53)
+    #titleLabel = Label(rootSubmission, text="Morel Mushrooms Logon", width=20, font=("bold", 20))
+    #titleLabel.place(x=90, y=53)
 
-    addressLabel = Label(rootSubmission, text="Address:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
-    addressLabel.place(x=28, y=130)
-    addressField = Entry(rootSubmission)
-    addressField.place(x=200, y=130, width=200)
-
-    cityLabel = Label(rootSubmission, text="City:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
-    cityLabel.place(x=28, y=180)
-    cityField = Entry(rootSubmission)
-    cityField.place(x=200, y=180, width=200)
-
-    stateLabel = Label(rootSubmission, text="State:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
-    stateLabel.place(x=28, y=230)
-    stateField = Entry(rootSubmission)
-    stateField.place(x=200, y=230, width=200)
-
-    noteLabel = Label(rootSubmission, text="Notes:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
-    noteLabel.place(x=28, y=280)
-    noteField = Entry(rootSubmission)
-    noteField.place(x=200, y=280, width=200)
-
-    dateLabel = Label(rootSubmission, text="Date:", width=20, anchor="e", justify=LEFT, font=("bold", 10))
-    dateLabel.place(x=28, y=330)
-    dateField = Entry(rootSubmission)
-    dateField.place(x=200, y=330, width=200)
     
-    Button(rootSubmission, text='Submit', command=lambda: (submit()), width=20, bg='brown', fg='white').place(x=180, y=380)
+    #Button(rootSubmission, text='Submit', command=lambda: (submit()), width=20, bg='brown', fg='white').place(x=180, y=380)
+
+
 
 #The above Submit button directs the program here. 
 def submit():
     #Pulling the data in the entry boxes
+    #global rootSubmission
+    #rootSubmission = Tk()
+    #addressField = Entry(rootSubmission)
+
     address = addressField.get()
     city = cityField.get()
     state = stateField.get()
@@ -87,6 +99,7 @@ def submit():
     if(address == "" or city == "" or state == "" or note == "" or date == ""):
         messagebox.showerror('Error', 'All fields are required')
     else:
+        print(address + "\n" + city + "\n" + state + "\n" + note + "\n" + date)
         openSubmittedConfirmWindow()
 
     #Verify that all of the fields have data, program shuts you down unless its filled
@@ -114,8 +127,9 @@ def submit():
 
 #Take in the field data and then 
 def openSubmittedConfirmWindow():
-    mail_subject = "Road Tech Repair Submission"
-    mail_message = "Thank you, " + fullName + ", the issue at " + street + " in " + city + ", " + state + " has been submitted." + issueDescription
+    #mail_subject = "Road Tech Repair Submission"
+    #mail_message = "Thank you, " + fullName + ", the issue at " + street + " in " + city + ", " + state + " has been submitted." + issueDescription
+    print("Shut Up, YOU!")
 
     #my_mailer = mailer.Mailer("py_mailer@clond.net","ZAhJDErU3QK8","smtp.gmail.com")
     #return my_mailer.send_mail(emailAddress, mail_subject, mail_message)
@@ -167,7 +181,7 @@ def openAdminWindow():
 
     scrollViewBox.insert(tk.END, df)
         
-rootLogOn.mainloop()
+root.mainloop()
 
 
 
