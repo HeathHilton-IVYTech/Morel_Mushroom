@@ -100,7 +100,13 @@ def submit():
         messagebox.showerror('Error', 'All fields are required')
     else:
         print(address + "\n" + city + "\n" + state + "\n" + note + "\n" + date)
-        openSubmittedConfirmWindow()
+        f = open('submissions.txt', 'r')
+        content = f.read()
+        print(content)
+        f.close()
+        
+        openAdminWindow()
+        #openSubmittedConfirmWindow()
 
     #Verify that all of the fields have data, program shuts you down unless its filled
     #if(fullName == "" or street == "" or city == "" or state == "" or emailAddress == "" or issueDescription == ""):
@@ -159,7 +165,6 @@ def openNewWindow():
     
 #The admin window to review the item submitted
 def openAdminWindow():
-
     window = tk.Tk()
     window.title("Issues Submitted")
     
@@ -172,14 +177,22 @@ def openAdminWindow():
     scroll.pack(side=tk.RIGHT, fill=tk.Y)
 
     #Pull all of the issues from the database
-    #submittedIssueList = databaseFunctions.getAllIssues()
-    #d = submittedIssueList
+
+    f = open('submissions.csv', 'r')
+    content = f.read()
+    print(content)
+    f.close()
+    submittedIssueList = content #databaseFunctions.getAllIssues()
+    d = submittedIssueList
     #Using Panda's Dataframe to manage the data and then spell out the metadata for the column names
+    df = pd.read_csv('submissions.csv', index_col=0)
+    #df = pd.DataFrame(data=data).T
     #df=pd.DataFrame(d, columns=['#', 'Name:', 'Street:', 'City:', 'State:', 'Email:', 'Issue:', 'Repaired:', 'Mystery:'])
     #Dropping one of the unused fields, added mostly for example purposes
     #df=df.drop(df.columns[[8]], axis=1)
 
     scrollViewBox.insert(tk.END, df)
+    scrollViewBox(df)
         
 root.mainloop()
 
