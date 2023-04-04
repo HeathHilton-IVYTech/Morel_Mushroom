@@ -1,0 +1,29 @@
+import sqlite3
+
+# Connect to the database
+conn = sqlite3.connect('mushroom.db')
+
+# Create a table to store the data
+conn.execute('''CREATE TABLE IF NOT EXISTS users
+             (id INTEGER PRIMARY KEY AUTOINCREMENT,
+             name TEXT NOT NULL,
+             email TEXT NOT NULL,
+             location TEXT NOT NULL);''')
+
+# Prompt the user to enter data and insert it into the database
+while True:
+    name = input("Enter your name: ")
+    email = input("Enter your email: ")
+    location = input("Enter mushroom location: ")
+    
+    # Insert the data into the table
+    conn.execute(f"INSERT INTO users (name, email, location) VALUES ('{name}', '{email}', '{location}')")
+    conn.commit()
+    
+    # Ask the user if they want to enter more data
+    more_data = input("Do you want to enter more data? (y/n): ")
+    if more_data.lower() != 'y':
+        break
+
+# Close the connection to the database
+conn.close()

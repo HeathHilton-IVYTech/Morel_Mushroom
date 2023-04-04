@@ -153,5 +153,3 @@ root.mainloop()
 #git add .
 #git commit -m "some sort of message"
 #git push
-
-cynthia 
