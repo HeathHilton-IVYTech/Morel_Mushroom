@@ -100,7 +100,7 @@ def submit():
         messagebox.showerror('Error', 'All fields are required')
     else:
         print(address + "\n" + city + "\n" + state + "\n" + note + "\n" + date)
-        f = open('submissions.txt', 'r')
+        f = open('submissions.csv', 'r')
         content = f.read()
         print(content)
         f.close()
@@ -185,9 +185,9 @@ def openAdminWindow():
     submittedIssueList = content #databaseFunctions.getAllIssues()
     d = submittedIssueList
     #Using Panda's Dataframe to manage the data and then spell out the metadata for the column names
-    df = pd.read_csv('submissions.csv', index_col=0)
+    #df=pd.DataFrame(df, columns=['#', 'Name:', 'Address:', 'City:', 'State:', 'Notes:', 'Date:'])
+    df = pd.read_csv('submissions.csv', sep=",")#index_col=0)
     #df = pd.DataFrame(data=data).T
-    #df=pd.DataFrame(d, columns=['#', 'Name:', 'Street:', 'City:', 'State:', 'Email:', 'Issue:', 'Repaired:', 'Mystery:'])
     #Dropping one of the unused fields, added mostly for example purposes
     #df=df.drop(df.columns[[8]], axis=1)
 
