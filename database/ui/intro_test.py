@@ -4,6 +4,8 @@ from tkinter import messagebox
 import pandas as pd
 
 #Overall declaration of global variables that the program uses
+username = ""
+password = ""
 address = ""
 city = ""
 state = ""
@@ -16,6 +18,7 @@ lines = ""
 root = Tk()
 root.geometry('500x600')
 root.title("Morel Mushrooms")
+root.iconbitmap("mushroom.ico")
 
 
 titleLabel = Label(root, text="Morel Mushrooms Submitter", width=35, font=("bold", 20))
@@ -60,21 +63,19 @@ dateField = Entry(root)
 dateField.place(x=200, y=450, width=200)
 
 
-Button(root, text='Submit', command=lambda: (submit()), width=15, bg='brown', fg='white').place(x=80, y=525)
-Button(root, text='Past Locations', command=lambda: (submittedLocations()), width=15, bg='brown', fg='white').place(x=280, y=525)
+Button(root, text='Submit', command=lambda: (submit()), width=15, bg='brown', fg='white').place(x=50, y=525)
+Button(root, text='Exit', command=lambda: (clear()), width=10, bg='brown', fg='white').place(x=200, y=525)
+Button(root, text='Past Locations', command=lambda: (submittedLocations()), width=15, bg='brown', fg='white').place(x=310, y=525)
 
 ##########################################################
 
-
-
-def openSubmissionWindow():
+def clear():
     root.destroy()
 
-
-
-#The above Submit button directs the program here. 
 def submit():
 
+    username = userName.get()
+    password = passWord.get()
     address = addressField.get()
     city = cityField.get()
     state = stateField.get()
@@ -84,29 +85,23 @@ def submit():
     if(address == "" or city == "" or state == "" or note == "" or date == ""):
         messagebox.showerror('Error', 'All fields are required')
     else:
-        print(address + "\n" + city + "\n" + state + "\n" + note + "\n" + date)
-        f = open('submissions.csv', 'r')
-        content = f.read()
-        print(content)
-        f.close()
-        
+        data = {
+            'Name': [username],
+            'Password': [password],
+            'Address': [address],
+            'City': [city],
+            'State': [state],
+            'Note': [note],
+            'Date': [date]
+        }
+        df = pd.DataFrame(data)
+        df.to_csv('submissions.csv', mode='a', index=False, header=False)
+        messagebox.showinfo('Submission Success', 'Your Morel location has been safely stored')
     
-    
-#The admin window to review the item submitted
+#The sumission window to review the item submitted
 def submittedLocations():
-    window = tk.Tk()
-    window.title("Submitted Locations")
-    
-    #ScrollView window was chosen to accomidate how many issues are to be submitted since Indiana roads are salty garbage
-    scrollViewBox = tk.Text(window, height=50, width=175)
-    scroll = tk.Scrollbar(window)
-    scrollViewBox.configure(yscrollcommand=scroll.set)
-    scrollViewBox.pack(side=tk.LEFT)
-    scroll.config(command=scrollViewBox.yview)
-    scroll.pack(side=tk.RIGHT, fill=tk.Y)
 
     #Pull all of the issues from the database
-
     f = open('submissions.csv', 'r')
     content = f.read()
     print(content)
@@ -114,9 +109,29 @@ def submittedLocations():
     submittedIssueList = content
     d = submittedIssueList
     df = pd.read_csv('submissions.csv', sep=",")
+    
+    username = userName.get()
+    password = passWord.get()
 
-    scrollViewBox.insert(tk.END, df)
-    scrollViewBox(df)
+    df = df.loc[df['Name'] == username]
+    df = df.loc[df['Password'] == password]
+    df = df.drop(['Password'], axis=1)
+    if len(df.index) == 0:
+        messagebox.showerror("Viewing Error", "Your user name and password haven't been used to submit any locations.")
+    else :
+        window = tk.Tk()
+        window.title("Submitted Locations")
+        window.iconbitmap("mushroom.ico")
+        
+        #ScrollView window was chosen to accomidate how many issues are to be submitted since Indiana roads are salty garbage
+        scrollViewBox = tk.Text(window, height=50, width=175)
+        scroll = tk.Scrollbar(window)
+        scrollViewBox.configure(yscrollcommand=scroll.set)
+        scrollViewBox.pack(side=tk.LEFT)
+        scroll.config(command=scrollViewBox.yview)
+        scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        scrollViewBox.insert(tk.END, df)
+        scrollViewBox(df)
         
 root.mainloop()
 
