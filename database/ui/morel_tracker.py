@@ -98,7 +98,7 @@ def submit():
         df.to_csv('submissions.csv', mode='a', index=False, header=False)
         messagebox.showinfo('Submission Success', 'Your Morel location has been safely stored')
     
-#The sumission window to review the item submitted
+#The submission window to review the item submitted
 def submittedLocations():
 
     #Pull all of the issues from the database
@@ -123,7 +123,7 @@ def submittedLocations():
         window.title("Submitted Locations")
         window.iconbitmap("mushroom.ico")
         
-        #ScrollView window was chosen to accomidate how many issues are to be submitted since Indiana roads are salty garbage
+        #ScrollView window was chosen to accommodate how many issues are to be submitted since Indiana roads are salty garbage
         scrollViewBox = tk.Text(window, height=50, width=175)
         scroll = tk.Scrollbar(window)
         scrollViewBox.configure(yscrollcommand=scroll.set)
